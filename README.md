@@ -6,4 +6,5 @@ Web app for identifying dog breeds
 
 ### Dataset links
 The dog breed dataset containing over 8000 images of 133 different breeds [here](https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/dogImages.zip)
+
 The human faces dataset (over 13000 images) can be found [here](https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/lfw.zip)
