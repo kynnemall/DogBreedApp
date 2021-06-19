@@ -86,7 +86,7 @@ def mobilenetv3_dog_detector():
     x = Dropout(0.5)(x)
     x = Dense(1, activation='sigmoid')(x)
     model = Model(pretrained_model.input, x)
-    model.load_weights("weights/face.best.mobilenetv3-small.h5")
+    model.load_weights("weights/dogdetector.best.mobilenetv3-small.h5")
     return model
 
 def detect_dog(img_path, model):
