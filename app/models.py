@@ -1,10 +1,8 @@
 import numpy as np
-from tensorflow.keras import Sequential
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import GlobalMaxPooling2D
-from tensorflow.keras.layers import GlobalAveragePooling2D, Dense, Dropout
-from tensorflow.keras.applications import MobileNetV3Small
-from tensorflow.keras.applications.xception import Xception, preprocess_input
+from tensorflow.keras.layers import Flatten, Dense, Dropout
+from tensorflow.keras.applications import MobileNetV3Small, MobileNet
 
 def image_to_tensor(input_img):
     """
@@ -26,45 +24,28 @@ def image_to_tensor(input_img):
     tensor = np.expand_dims(img_arr, axis=0)
     return tensor
 
-def extract_xception(tensor):
+def mobilenet_breed_model():
     """
-    Extract features from the input tensor using the Xception model,
-    pre-trained on imagenet, and return the output layer feature tensor
-
-    Parameters
-    ----------
-    tensor : tensor
-        4D array of shape (1, 224, 224, 3)
+    Define architecture for custom MobileNet and load weights
 
     Returns
     -------
-    tensor : tensor
-        features extracted by the Xception model
+    model : CNN
+        Custom MobileNet model with custom weights
 
     """
-    model = Xception(weights='imagenet', include_top=False)
-    result = model.predict(preprocess_input(tensor))
-    return result
-
-def xception_model():
-    """
-    Build custom Xception model to predict dog breeds and load weights
-
-    Returns
-    -------
-    Xception_model : CNN
-        Custom Xception model to predict dog breeds
-
-    """
-    Xception_model = Sequential()
-    Xception_model.add(GlobalAveragePooling2D(
-        # shape is the same as result.shape[1:] from extract_Xception
-        input_shape=(7,7,2048)
-        ))
-    Xception_model.add(Dropout(0.2))
-    Xception_model.add(Dense(133, activation='softmax'))
-    Xception_model.load_weights("weights/weights.best.Xception.hdf5")
-    return Xception_model
+    mobile = MobileNet(input_shape=(224,224,3), classes=133,
+                       include_top=False, weights=None)
+    x = mobile.layers[-1].output
+    x = Flatten()(x)
+    x = Dense(1024, activation="relu")(x)
+    x = Dropout(0.1)(x)
+    x = Dense(1024, activation="relu")(x)
+    x = Dropout(0.1)(x)
+    output = Dense(133, activation='softmax')(x)
+    model = Model(inputs=mobile.input, outputs=output)
+    model.load_weights('weights/weights.mobilenet.best.hdf5')
+    return model
 
 def mobilenetv3_dog_detector():
     """
