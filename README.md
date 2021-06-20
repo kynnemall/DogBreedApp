@@ -4,7 +4,7 @@ A simple web app for identifying dog breeds in colour images
 ### Libraries
 * `streamlit` was used to build the web app
 * `tensorflow.keras` was used to define model architectures and train models
-* `scikit-image` was used to implement a local interpretable model-agnostic explanation (LIME) algorithm to better understand how the model makes predictions
+* `scikit-image` and `scikit-learn` were used to implement a local interpretable model-agnostic explanation (LIME) algorithm to better understand how the model makes predictions. This algorithm was implemented according to a tutorial provided by Cristian Arteaga ([arteagac](https://arteagac.github.io/)), which can be found [here](https://nbviewer.jupyter.org/url/arteagac.github.io/blog/lime_image.ipynb)
 
 ### Datasets
 * The dog breed dataset containing over 8000 images of 133 different breeds [here](https://s3-us-west-1.amazonaws.com/udacity-aind/dog-project/dogImages.zip)
