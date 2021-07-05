@@ -1,9 +1,16 @@
 ## DogBreedApp
 A simple web app for identifying dog breeds in colour images
 
+### Running this app
+* Clone this repo
+* Change directory to the `app` directory
+* Install `tensorflow` and `streamlit` using pip
+* Enter `streamlit run main.py` in a terminal. A browser tab containing the web app should open
+* Upload a sample image and have fun!
+
 ### Libraries
 * `streamlit` was used to build the web app
-* `tensorflow.keras` was used to define model architectures and train models
+* `tensorflow` (version 2.5.0) was used to define model architectures and train models
 * `scikit-image` and `scikit-learn` were used to implement a local interpretable model-agnostic explanation (LIME) algorithm to better understand how the model makes predictions. This algorithm was implemented according to a tutorial provided by Cristian Arteaga ([arteagac](https://arteagac.github.io/)), which can be found [here](https://nbviewer.jupyter.org/url/arteagac.github.io/blog/lime_image.ipynb)
 
 ### Datasets
