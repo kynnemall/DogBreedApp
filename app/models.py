@@ -1,8 +1,9 @@
 import numpy as np
+from tensorflow.keras import Sequential
 from tensorflow.keras.models import Model
-from tensorflow.keras.layers import GlobalAveragePooling2D
+from tensorflow.keras.layers import GlobalAveragePooling2D, GlobalMaxPooling2D
 from tensorflow.keras.layers import Flatten, Dense, Dropout
-from tensorflow.keras.applications import MobileNetV3Small
+from tensorflow.keras.applications import MobileNetV3Small, Xception
 
 def image_to_tensor(input_img):
     """
@@ -24,6 +25,25 @@ def image_to_tensor(input_img):
     tensor = np.expand_dims(img_arr, axis=0)
     return tensor
 
+def xception_model():
+    """
+    Build custom Xception model to predict dog breeds and load weights
+    
+    Returns
+    -------
+    Xception_model : CNN
+        Custom Xception model to predict dog breeds
+    """
+    Xception_model = Sequential()
+    Xception_model.add(GlobalAveragePooling2D(input_shape=(7, 7, 2048)))
+    Xception_model.add(Dropout(0.2))
+    Xception_model.add(Dense(133, activation='softmax'))
+    Xception_model.load_weights("weights/weights.best.Xception.hdf5")
+    model = Sequential()
+    model.add(Xception(weights='imagenet', include_top=False))
+    model.add(Xception_model)
+    return model
+
 def mobilenet_breed_model():
     """
     Define architecture for custom MobileNet and load weights
@@ -38,8 +58,6 @@ def mobilenet_breed_model():
                        include_top=False, weights=None)
     x = mobile.layers[-1].output
     x = Flatten()(x)
-    x = Dense(1024, activation="relu")(x)
-    x = Dropout(0.1)(x)
     x = Dense(1024, activation="relu")(x)
     x = Dropout(0.1)(x)
     output = Dense(133, activation='softmax')(x)
@@ -66,7 +84,7 @@ def mobilenetv3_dog_detector():
     x = Dropout(0.5)(x)
     x = Dense(1, activation='sigmoid')(x)
     model = Model(pretrained_model.input, x)
-    model.load_weights("weights/dogdetector.best.mobilenetv3-small.h5")
+    model.load_weights("weights/weights.best.dog-detector.mobilenetv3-small.h5")
     return model
 
 def detect_dog(input_img, model):
