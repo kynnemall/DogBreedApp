@@ -1,8 +1,8 @@
 import numpy as np
 from tensorflow.keras.models import Model
-from tensorflow.keras.layers import GlobalMaxPooling2D
+from tensorflow.keras.layers import GlobalAveragePooling2D
 from tensorflow.keras.layers import Flatten, Dense, Dropout
-from tensorflow.keras.applications import MobileNetV3Small, MobileNet
+from tensorflow.keras.applications import MobileNetV3Small
 
 def image_to_tensor(input_img):
     """
