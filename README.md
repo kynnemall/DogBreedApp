@@ -1,5 +1,5 @@
 ## DogBreedApp
-A simple web app for identifying dog breeds in colour images
+A simple web app for identifying dog breeds in colour images. Convolutional neural networks (CNNs) are capable of classifying images using learned feature representations for each class to be identified. State-of-the-art models were trained to determine if images contained a human or dog (MobileNetV3-Small) and then to predict which dog breed the image most resembles. The dog breeds were learned by training on a dataset containing 133 different breeds.
 
 ### Running this app
 * Clone this repo
