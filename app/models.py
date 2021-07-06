@@ -1,18 +1,19 @@
 import numpy as np
+from PIL import Image
 from tensorflow.keras import Sequential
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import GlobalAveragePooling2D, GlobalMaxPooling2D
 from tensorflow.keras.layers import Flatten, Dense, Dropout
 from tensorflow.keras.applications import MobileNetV3Small, Xception
 
-def image_to_tensor(input_img):
+def image_to_tensor(input_img, np_array=False):
     """
     Load image and prepare to be used as input to a CNN
 
     Parameters
     ----------
-    img_path : str
-        path to image
+    input_img : Pillow Image object
+        RGB image to be prepared
 
     Returns
     -------
@@ -20,6 +21,8 @@ def image_to_tensor(input_img):
         4D array of shape (1, 224, 224, 3)
 
     """
+    if np_array:
+        input_img = Image.fromarray(input_img)
     img = input_img.resize((224, 224))
     img_arr = np.array(img)
     tensor = np.expand_dims(img_arr, axis=0)
