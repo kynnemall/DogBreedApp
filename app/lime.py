@@ -1,5 +1,6 @@
 import copy
 import numpy as np
+import streamlit as st
 from sklearn.metrics import pairwise_distances
 from sklearn.linear_model import LinearRegression
 from skimage.segmentation import quickshift
@@ -8,12 +9,11 @@ from tensorflow.keras.applications.xception import preprocess_input
 from models import image_to_tensor
 
 
-def run_lime(input_image, tensor, model, num_perturb=150, num_top_features=4):
+def run_lime(input_image, tensor, model, num_perturb=50, num_top_features=4):
     # taken from https://nbviewer.jupyter.org/url/arteagac.github.io/blog/lime_image.ipynb
 
     # make predictions before running perturbations
-    print("Initial predictions")
-    # tensor = image_to_tensor(input_image, True)
+    st.write("Making initial predictions")
     preprocessed_image = preprocess_input(tensor)
     preds = model.predict(tensor)
         
@@ -28,14 +28,16 @@ def run_lime(input_image, tensor, model, num_perturb=150, num_top_features=4):
     perturbations = np.random.binomial(1, 0.5, size=(num_perturb, num_superpixels))
 
     # run predictions on images with perturbations
-    print("Predicting with perturbations")
+    st.write("Thinking which parts of the image are most important")
+    my_bar = st.progress_bar(0.0)
     predictions = []
-    for pert in perturbations:
+    for i,pert in enumerate(perturbations):
         perturbed_img = perturb_image(input_image, pert, superpixels)
         tensor = image_to_tensor(perturbed_img.astype(np.uint8), True)
         preprocessed_image = preprocess_input(tensor)
         pred = model.predict(preprocessed_image)
         predictions.append(pred)
+        my_bar.progress(i/num_perturb)
     predictions = np.array(predictions)
     
     # perturbation with all superpixels enabled 
@@ -45,7 +47,7 @@ def run_lime(input_image, tensor, model, num_perturb=150, num_top_features=4):
     weights = np.sqrt(np.exp(-(distances**2)/kernel_width**2)) #Kernel function
 
     # compute linear model using weights and perturbations
-    print("Fitting linear model")
+    st.write("Thinking what words work best")
     top_pred_classes = preds[0].argsort()[-5:][::-1]
     class_to_explain = top_pred_classes[0]
     simpler_model = LinearRegression()
