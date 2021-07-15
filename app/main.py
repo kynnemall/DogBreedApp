@@ -70,7 +70,7 @@ if uploaded_file is not None:
     else:
         st.write(f"I think you would be a {breed}!")
     st.write("If you hang around for a minute or two, I'll tell you how I know that breed suits you!")
-    top_superpixels = run_lime(np.array(image), tensor, breed_model)
-    superpixels_img = Image.fromarray(top_superpixels)
-    st.image(superpixels_img, caption="", use_column_width=True)
-    st.write("So . . . ")
+#     top_superpixels = run_lime(np.array(image), tensor, breed_model)
+#     superpixels_img = Image.fromarray(top_superpixels)
+#     st.image(superpixels_img, caption="", use_column_width=True)
+#     st.write("So . . . ")
