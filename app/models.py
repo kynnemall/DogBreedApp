@@ -23,11 +23,10 @@ def image_to_tensor(input_img, np_array=False):
     """
     if np_array:
         func_image = Image.fromarray(input_img)
-        img = func_image.resize((224, 224))
+        img = np.resize(func_image, (224, 224))
     else:
         img = np.resize(input_img, (224, 224))
-    img_arr = np.array(img)
-    tensor = np.expand_dims(img_arr, axis=0)
+    tensor = np.expand_dims(img, axis=0)
     return tensor
 
 def xception_model():
