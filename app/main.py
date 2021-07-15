@@ -74,7 +74,7 @@ if uploaded_file is not None:
     answer = st.button("Please explain!")
     if answer:
         st.write("Formulating an answer")
-        top_superpixels = run_lime()
+        top_superpixels = run_lime(image, breed_model)
         superpixels_img = Image.fromarray(top_superpixels)
         st.image(superpixels_img, caption="", use_column_width=True)
         st.write("So . . . ")
