@@ -14,7 +14,7 @@ st.set_page_config(
 )
 track_tag = st.secrets["ANALYTICS_TAG"]
 
-components.html(
+st.markdown(
     f"""
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={track_tag}"></script>
@@ -25,7 +25,7 @@ components.html(
     
       gtag('config', '{track_tag}');
     </script>
-    """
+    """, unsafe_allow_html=True
 )
 
 dog_detector_model = models.mobilenetv3_dog_detector()
@@ -69,4 +69,13 @@ if uploaded_file is not None:
         st.write(f"I think you would be an {breed}!")
     else:
         st.write(f"I think you would be a {breed}!")
-    st.write("Soon I can explain why I think what breed you are, but you'll have to wait!")
+    st.write("Soon I can explain why I think what breed you are, but it could take me minute or two. Would you like to find out?")
+
+    answer = st.button("Please explain!")
+    if answer:
+        st.write("Formulating an answer")
+        top_superpixels = run_lime()
+        superpixels_img = Image.fromarray(top_superpixels)
+        st.image(superpixels_img, caption="", use_column_width=True)
+        st.write("So . . . ")
+          
