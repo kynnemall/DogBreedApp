@@ -13,7 +13,7 @@ from lime import run_lime
 # with open("dog_names.txt","r") as f:
 #     dog_names = [d.replace("_", " ").replace("\n", "") for d in f.readlines()]
 import os
-print(os.listdir())
+st.write(os.listdir())
 
 st.title("What dog breed are you?")
 st.write("""
