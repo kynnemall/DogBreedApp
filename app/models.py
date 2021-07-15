@@ -22,8 +22,8 @@ def image_to_tensor(input_img, np_array=False):
 
     """
     if np_array:
-        img = Image.fromarray(input_img)
-        img = img.resize((224, 224))
+        image = Image.fromarray(input_img)
+        img = image.resize((224, 224))
     else:
         img = np.resize(input_img, (224, 224))
     img_arr = np.array(img)
