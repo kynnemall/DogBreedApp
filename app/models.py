@@ -41,7 +41,7 @@ def xception_model():
     Xception_model.add(GlobalAveragePooling2D(input_shape=(7, 7, 2048)))
     Xception_model.add(Dropout(0.2))
     Xception_model.add(Dense(133, activation='softmax'))
-    Xception_model.load_weights("weights/weights.best.Xception.hdf5")
+    Xception_model.load_weights("app/weights/weights.best.Xception.hdf5")
     model = Sequential()
     model.add(Xception(weights='imagenet', include_top=False))
     model.add(Xception_model)
@@ -65,7 +65,7 @@ def mobilenet_breed_model():
     x = Dropout(0.1)(x)
     output = Dense(133, activation='softmax')(x)
     model = Model(inputs=mobile.input, outputs=output)
-    model.load_weights('weights/weights.mobilenet.best.hdf5')
+    model.load_weights('app/weights/weights.mobilenet.best.hdf5')
     return model
 
 def mobilenetv3_dog_detector():
@@ -87,7 +87,7 @@ def mobilenetv3_dog_detector():
     x = Dropout(0.5)(x)
     x = Dense(1, activation='sigmoid')(x)
     model = Model(pretrained_model.input, x)
-    model.load_weights("weights/weights.best.dog-detector.mobilenetv3-small.h5")
+    model.load_weights("app/weights/weights.best.dog-detector.mobilenetv3-small.h5")
     return model
 
 def detect_dog(input_img, model):
