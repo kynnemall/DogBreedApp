@@ -8,6 +8,10 @@ from lime import run_lime
 # check this link to learn how to make predictions with streamlit:
 # https://towardsdatascience.com/image-classification-of-uploaded-files-using-streamlits-killer-new-feature-7dd6aa35fe0
 
+st.set_page_config(
+     page_title="Dog breed guesser"
+)
+
 dog_detector_model = models.mobilenetv3_dog_detector()
 breed_model = models.xception_model()
 with open("app/dog_names.txt","r") as f:
