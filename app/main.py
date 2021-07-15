@@ -45,7 +45,7 @@ if uploaded_file is not None:
     tensor = models.image_to_tensor(image)
     results = breed_model.predict(tensor)
     breed = dog_names[np.argmax(results)]
-    if breed.startswith(('a', 'e', 'i', 'o', 'u')):
+    if breed.lower().startswith(('a', 'e', 'i', 'o', 'u')):
         st.write(f"I think you would be an {breed}!")
     else:
         st.write(f"I think you would be a {breed}!")
