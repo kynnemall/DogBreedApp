@@ -1,5 +1,6 @@
 import numpy as np
 import streamlit as st
+import streamlit.components.v1 as components
 from PIL import Image
 from tensorflow.keras.applications.xception import preprocess_input
 
@@ -7,6 +8,25 @@ import models
 from lime import run_lime
 # check this link to learn how to make predictions with streamlit:
 # https://towardsdatascience.com/image-classification-of-uploaded-files-using-streamlits-killer-new-feature-7dd6aa35fe0
+
+st.set_page_config(
+     page_title="Dog breed guesser"
+)
+track_tag = st.secrets["ANALYTICS_TAG"]
+
+st.markdown(
+    f"""
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={track_tag}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){{dataLayer.push(arguments);}}
+      gtag('js', new Date());
+    
+      gtag('config', '{track_tag}');
+    </script>
+    """, unsafe_allow_html=True
+)
 
 dog_detector_model = models.mobilenetv3_dog_detector()
 breed_model = models.xception_model()
@@ -45,8 +65,12 @@ if uploaded_file is not None:
     tensor = models.image_to_tensor(image)
     results = breed_model.predict(tensor)
     breed = dog_names[np.argmax(results)]
-    if breed.startswith(('a', 'e', 'i', 'o', 'u')):
+    if breed.lower().startswith(('a', 'e', 'i', 'o', 'u')):
         st.write(f"I think you would be an {breed}!")
     else:
         st.write(f"I think you would be a {breed}!")
-    st.write("Soon I can explain why I think what breed you are, but you'll have to wait!")
+    st.write("If you hang around for a minute or two, I'll tell you how I know that breed suits you!")
+    top_superpixels = run_lime(np.array(image), tensor, breed_model)
+    superpixels_img = Image.fromarray(top_superpixels)
+    st.image(superpixels_img, caption="", use_column_width=True)
+    st.write("So . . . ")

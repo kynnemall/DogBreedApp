@@ -9,25 +9,23 @@ from tensorflow.keras.applications import MobileNetV3Small, Xception
 def image_to_tensor(input_img, np_array=False):
     """
     Load image and prepare to be used as input to a CNN
-
     Parameters
     ----------
     input_img : Pillow Image object
         RGB image to be prepared
-
     Returns
     -------
     tensor : tensor
         4D array of shape (1, 224, 224, 3)
-
     """
     if np_array:
-        input_img = Image.fromarray(input_img)
-        img = input_img.resize((224, 224))
+        func_image = Image.fromarray(input_img)
+        print(func_image.shape)
+        img = np.resize(func_image, (224, 224, 3))
     else:
-        img = input_img
-    img_arr = np.array(img)
-    tensor = np.expand_dims(img_arr, axis=0)
+        print(input_img.size)
+        img = np.resize(input_img, (224, 224, 3))
+    tensor = np.expand_dims(img, axis=0)
     return tensor
 
 def xception_model():
