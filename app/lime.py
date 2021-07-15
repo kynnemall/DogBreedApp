@@ -13,7 +13,7 @@ def run_lime(input_image, model, num_perturb=150, num_top_features=4):
 
     # make predictions before running perturbations
     print("Initial predictions")
-    tensor = image_to_tensor(input_image)
+    tensor = image_to_tensor(input_image, True)
     preprocessed_image = preprocess_input(tensor)
     preds = model.predict(tensor)
         
