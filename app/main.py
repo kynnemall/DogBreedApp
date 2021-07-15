@@ -72,10 +72,10 @@ if uploaded_file is not None:
     st.write("Soon I can explain why I think what breed you are, but it could take me minute or two. Would you like to find out?")
 
     answer = st.button("Please explain!")
-    if answer:
-        st.write("Formulating an answer")
-        top_superpixels = run_lime(image, breed_model)
-        superpixels_img = Image.fromarray(top_superpixels)
-        st.image(superpixels_img, caption="", use_column_width=True)
-        st.write("So . . . ")
+if answer:
+   st.write("Formulating an answer")
+   top_superpixels = run_lime(image, breed_model)
+   superpixels_img = Image.fromarray(top_superpixels)
+   st.image(superpixels_img, caption="", use_column_width=True)
+   st.write("So . . . ")
           
