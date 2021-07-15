@@ -8,12 +8,12 @@ from tensorflow.keras.applications.xception import preprocess_input
 from models import image_to_tensor
 
 
-def run_lime(input_image, model, num_perturb=150, num_top_features=4):
+def run_lime(input_image, tensor, model, num_perturb=150, num_top_features=4):
     # taken from https://nbviewer.jupyter.org/url/arteagac.github.io/blog/lime_image.ipynb
 
     # make predictions before running perturbations
     print("Initial predictions")
-    tensor = image_to_tensor(input_image, True)
+    #tensor = image_to_tensor(input_image, True)
     preprocessed_image = preprocess_input(tensor)
     preds = model.predict(tensor)
         
