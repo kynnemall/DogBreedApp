@@ -1,6 +1,5 @@
 import copy
 import numpy as np
-from tqdm import tqdm
 from sklearn.metrics import pairwise_distances
 from sklearn.linear_model import LinearRegression
 from skimage.segmentation import quickshift
@@ -31,7 +30,7 @@ def run_lime(input_image, model, num_perturb=150, num_top_features=4):
     # run predictions on images with perturbations
     print("Predicting with perturbations")
     predictions = []
-    for pert in tqdm(perturbations):
+    for pert in perturbations:
         perturbed_img = perturb_image(input_image, pert, superpixels)
         tensor = image_to_tensor(perturbed_img.astype(np.uint8), True)
         preprocessed_image = preprocess_input(tensor)
