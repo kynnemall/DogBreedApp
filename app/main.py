@@ -1,5 +1,6 @@
 import numpy as np
 import streamlit as st
+import streamlit.components.v1 as components
 from PIL import Image
 from tensorflow.keras.applications.xception import preprocess_input
 
@@ -10,6 +11,21 @@ from lime import run_lime
 
 st.set_page_config(
      page_title="Dog breed guesser"
+)
+track_tag = st.secrets["analytics_tag"]
+
+components.html(
+    f"""
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={track_tag}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){{dataLayer.push(arguments);}}
+      gtag('js', new Date());
+    
+      gtag('config', '{track_tag}');
+    </script>
+    """
 )
 
 dog_detector_model = models.mobilenetv3_dog_detector()
