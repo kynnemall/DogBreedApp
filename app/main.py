@@ -43,8 +43,10 @@ if uploaded_file is not None:
 
     # predict dog breed
     tensor = models.image_to_tensor(image)
-#    preprocessed_image = preprocess_input(tensor)
     results = breed_model.predict(tensor)
     breed = dog_names[np.argmax(results)]
-    st.write(f"I think you would be a {breed}!")
+    if breed.startswith(('a', 'e', 'i', 'o', 'u')):
+        st.write(f"I think you would be an {breed}!")
+    else:
+        st.write(f"I think you would be a {breed}!")
     st.write("Soon I can explain why I think what breed you are, but you'll have to wait!")
