@@ -1,5 +1,3 @@
-import os
-print(os.listdir())
 import numpy as np
 import streamlit as st
 from PIL import Image
@@ -12,8 +10,10 @@ from lime import run_lime
 
 #dog_detector_model = models.mobilenetv3_dog_detector()
 #breed_model = models.xception_model()
-with open("dog_names.txt","r") as f:
-    dog_names = [d.replace("_", " ").replace("\n", "") for d in f.readlines()]
+# with open("dog_names.txt","r") as f:
+#     dog_names = [d.replace("_", " ").replace("\n", "") for d in f.readlines()]
+import os
+print(os.listdir())
 
 st.title("What dog breed are you?")
 st.write("""
