@@ -23,9 +23,9 @@ def image_to_tensor(input_img, np_array=False):
     """
     if np_array:
         func_image = Image.fromarray(input_img)
-        img = np.resize(func_image, (224, 224))
+        img = np.resize(func_image, (224, 224, 3))
     else:
-        img = np.resize(input_img, (224, 224))
+        img = np.resize(input_img, (224, 224, 3))
     tensor = np.expand_dims(img, axis=0)
     return tensor
 
