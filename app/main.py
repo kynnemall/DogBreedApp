@@ -12,7 +12,7 @@ from lime import run_lime
 st.set_page_config(
      page_title="Dog breed guesser"
 )
-track_tag = st.secrets["ANALYTICS_TAG"]
+# track_tag = st.secrets["ANALYTICS_TAG"]
 
 st.markdown(
     f"""
