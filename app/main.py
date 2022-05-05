@@ -12,21 +12,6 @@ from lime import run_lime
 st.set_page_config(
      page_title="Dog breed guesser"
 )
-# track_tag = st.secrets["ANALYTICS_TAG"]
-
-st.markdown(
-    f"""
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id={track_tag}"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){{dataLayer.push(arguments);}}
-      gtag('js', new Date());
-    
-      gtag('config', '{track_tag}');
-    </script>
-    """, unsafe_allow_html=True
-)
 
 dog_detector_model = models.mobilenetv3_dog_detector()
 breed_model = models.xception_model()
